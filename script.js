@@ -10,19 +10,27 @@ const rows = canvas.height / resolution;
 function create2dArray() {
   return new Array(10).fill(null).map(() => new Array(10).fill(0));
 }
-const grid = create2dArray();
-console.log(grid);
-console.log(cols, rows, grid);
 
-function render(area) {
+function initialRender(area) {
+  const cellArray = [];
   for (let col = 0; col < area.length; col++) {
     for (let row = 0; row < area[col].length; row++) {
-      //  const cell = grid[col][row];
-
+      const cell = {
+        x: col,
+        y: row,
+        alive: 0,
+      };
+      cellArray.push(cell);
       context.beginPath();
       context.rect(col * resolution, row * resolution, resolution, resolution);
       context.stroke();
     }
   }
+  return cellArray;
 }
-render(grid);
+
+const grid = create2dArray();
+console.log(grid);
+const cells = initialRender(grid);
+cells[5].alive = 1;
+console.log(cells);
