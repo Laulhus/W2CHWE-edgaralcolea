@@ -59,4 +59,26 @@ nextGen();
 
 //  cellsAlive function to check alive cells
 
-function cellsAlive(cells) {}
+function cellsAlive() {
+  let aliveNeighbours = 0;
+  const thisGenCells = [];
+  for (let n = 0; n < cells.length; n += 1) {
+    for (let i = -1; i < 2; i += 1) {
+      for (let j = -1; j < 2; j += 1) {
+        const neighbour = cells.find(
+          (cell) => cell.x === cell.x + i && cell.y === cell.y + j
+        );
+        if (neighbour !== undefined) {
+          if (neighbour.alive) {
+            aliveNeighbours += 1;
+          }
+        }
+      }
+      cells[n].aliveNeighbours = aliveNeighbours;
+      thisGenCells.push(cells[n]);
+    }
+  }
+  return thisGenCells;
+}
+cellsAlive();
+console.log(cellsAlive());
