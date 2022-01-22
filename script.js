@@ -33,4 +33,19 @@ const grid = create2dArray();
 console.log(grid);
 const cells = initialRender(grid);
 cells[5].alive = 1;
+function nextGen(area) {
+  for (const cell of cells) {
+    context.beginPath();
+    context.rect(
+      cell.x * resolution,
+      cell.y * resolution,
+      resolution,
+      resolution
+    );
+    context.fillStyle = cell.alive ? "black" : "white";
+    context.stroke();
+    context.fill();
+  }
+}
 console.log(cells);
+nextGen();
