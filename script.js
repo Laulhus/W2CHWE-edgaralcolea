@@ -11,9 +11,17 @@ function create2dArray() {
   return new Array(10).fill(null).map(() => new Array(10).fill(0));
 }
 const grid = create2dArray();
-
-context.fillRect(10, 10, 100, 100);
-context.beginPath();
-context.stroke();
-
 console.log(grid);
+render(grid);
+
+function render(area) {
+  for (let col = 0; col < area.length; col++) {
+    for (let row = 0; row < area[col].length; row++) {
+      const cell = grid[col][row];
+
+      context.beginPath();
+      context.rect(col * resolution, row * resolution, resolution, resolution);
+      context.stroke();
+    }
+  }
+}
