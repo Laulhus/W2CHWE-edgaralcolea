@@ -6,8 +6,8 @@ const context = canvas.getContext("2d");
 const resolution = 40;
 canvas.width = 400;
 canvas.height = 400;
-const cols = canvas.width / resolution;
-const rows = canvas.height / resolution;
+//  const cols = canvas.width / resolution;
+//  const rows = canvas.height / resolution;
 
 //  Grid Rendering
 function create2dArray() {
