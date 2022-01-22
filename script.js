@@ -12,12 +12,12 @@ function create2dArray() {
 }
 const grid = create2dArray();
 console.log(grid);
-render(grid);
+console.log(cols, rows, grid);
 
 function render(area) {
   for (let col = 0; col < area.length; col++) {
     for (let row = 0; row < area[col].length; row++) {
-      const cell = grid[col][row];
+      //  const cell = grid[col][row];
 
       context.beginPath();
       context.rect(col * resolution, row * resolution, resolution, resolution);
@@ -25,3 +25,4 @@ function render(area) {
     }
   }
 }
+render(grid);
