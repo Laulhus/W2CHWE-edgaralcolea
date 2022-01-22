@@ -1,3 +1,5 @@
+//  Variables Init
+
 const canvas = document.querySelector("canvas");
 const context = canvas.getContext("2d");
 
@@ -7,6 +9,7 @@ canvas.height = 400;
 const cols = canvas.width / resolution;
 const rows = canvas.height / resolution;
 
+//  Grid Rendering
 function create2dArray() {
   return new Array(10).fill(null).map(() => new Array(10).fill(0));
 }
@@ -18,7 +21,7 @@ function initialRender(area) {
       const cell = {
         x: col,
         y: row,
-        alive: 0,
+        alive: false,
       };
       cellArray.push(cell);
       context.beginPath();
@@ -29,11 +32,15 @@ function initialRender(area) {
   return cellArray;
 }
 
+//  nextGen function to draw alive cells functions
+
 const grid = create2dArray();
 console.log(grid);
 const cells = initialRender(grid);
-cells[5].alive = 1;
-function nextGen(area) {
+cells[5].alive = true;
+cells[56].alive = true;
+
+function nextGen() {
   for (const cell of cells) {
     context.beginPath();
     context.rect(
@@ -49,3 +56,7 @@ function nextGen(area) {
 }
 console.log(cells);
 nextGen();
+
+//  cellsAlive function to check alive cells
+
+function cellsAlive(cells) {}
