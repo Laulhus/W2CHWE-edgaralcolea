@@ -8,12 +8,10 @@ canvas.width = 400;
 canvas.height = 400;
 const cols = canvas.width / resolution;
 const rows = canvas.height / resolution;
+let cells = null;
 
 let intervalID;
-//  Grid Rendering
-function create2dArray() {
-  return new Array(10).fill(null).map(() => new Array(10).fill(0));
-}
+
 //  Adds cell objects to 2D array
 function initialRender(area) {
   const cellArray = [];
@@ -34,17 +32,7 @@ function initialRender(area) {
   return cellArray;
 }
 
-//  renderNextGen function to draw alive cells functions
-
-const grid = create2dArray();
-const cells = initialRender(grid);
-console.log(cells);
-cells[0][4].alive = true;
-cells[1][3].alive = true;
-cells[1][2].alive = true;
-cells[2][3].alive = true;
-cells[3][1].alive = true;
-
+//  Grid Rendering
 function renderNextGen() {
   for (const row of cells) {
     for (const cell of row) {
@@ -61,6 +49,26 @@ function renderNextGen() {
     }
   }
 }
+function selectCell() {
+  canvas.addEventListener("click", (event) => {
+    const cellCol = Math.floor(
+      (event.clientX - canvas.offsetLeft) / resolution
+    );
+    const cellRow = Math.floor((event.clientY - canvas.offsetTop) / resolution);
+    cells[cellCol][cellRow].alive = true;
+    renderNextGen();
+  });
+}
+function create2dArray() {
+  return new Array(10)
+    .fill(null)
+    .map(() => new Array(10).fill(0).map(() => selectCell()));
+}
+//  renderNextGen function to draw alive cells functions
+
+const grid = create2dArray();
+cells = initialRender(grid);
+
 renderNextGen();
 
 //  Function to check alive neighbours
@@ -114,16 +122,29 @@ function update() {
 }
 
 //  Starts the game
+
 function startGame() {
   if (!intervalID) {
     intervalID = setInterval(update, 500);
   }
 }
 //  Stops the game
+
 function stopGame() {
   clearInterval(intervalID);
   intervalID = null;
 }
+
+//  Resets the game
+
+function resetGame() {
+  clearInterval(intervalID);
+  intervalID = null;
+  cells = initialRender(grid);
+  renderNextGen();
+}
 //  DOM click events to manage the game
+
 document.querySelector(".start-button").addEventListener("click", startGame);
 document.querySelector(".stop-button").addEventListener("click", stopGame);
+document.querySelector(".reset-button").addEventListener("click", resetGame);
