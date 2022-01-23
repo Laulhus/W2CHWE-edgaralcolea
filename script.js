@@ -9,6 +9,7 @@ canvas.height = 400;
 const cols = canvas.width / resolution;
 const rows = canvas.height / resolution;
 
+let intervalID;
 //  Grid Rendering
 function create2dArray() {
   return new Array(10).fill(null).map(() => new Array(10).fill(0));
@@ -110,7 +111,19 @@ function update() {
   countAliveNeighbours();
   applyRules();
   renderNextGen();
-  requestAnimationFrame(update);
 }
-requestAnimationFrame(update);
-update();
+
+//  Starts the game
+function startGame() {
+  if (!intervalID) {
+    intervalID = setInterval(update, 500);
+  }
+}
+//  Stops the game
+function stopGame() {
+  clearInterval(intervalID);
+  intervalID = null;
+}
+//  DOM click events to manage the game
+document.querySelector(".start-button").addEventListener("click", startGame);
+document.querySelector(".stop-button").addEventListener("click", stopGame);
