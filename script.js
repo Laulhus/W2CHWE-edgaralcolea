@@ -17,13 +17,14 @@ function create2dArray() {
 function initialRender(area) {
   const cellArray = [];
   for (let col = 0; col < area.length; col++) {
+    cellArray.push(area[col]);
     for (let row = 0; row < area[col].length; row++) {
       const cell = {
         x: col,
         y: row,
         alive: false,
       };
-      cellArray.push(cell);
+      cellArray[col][row] = cell;
       context.beginPath();
       context.rect(col * resolution, row * resolution, resolution, resolution);
       context.stroke();
@@ -35,29 +36,29 @@ function initialRender(area) {
 //  nextGen function to draw alive cells functions
 
 const grid = create2dArray();
-console.log(grid);
 const cells = initialRender(grid);
-cells[5].alive = true;
-cells[56].alive = true;
+console.log(cells);
+cells[5][0].alive = true;
+cells[6][9].alive = true;
 
 function nextGen() {
-  for (const cell of cells) {
-    context.beginPath();
-    context.rect(
-      cell.x * resolution,
-      cell.y * resolution,
-      resolution,
-      resolution
-    );
-    context.fillStyle = cell.alive ? "black" : "white";
-    context.stroke();
-    context.fill();
+  for (const row of cells) {
+    for (const cell of row) {
+      context.beginPath();
+      context.rect(
+        cell.x * resolution,
+        cell.y * resolution,
+        resolution,
+        resolution
+      );
+      context.fillStyle = cell.alive ? "black" : "white";
+      context.stroke();
+      context.fill();
+    }
   }
 }
-console.log(cells);
-nextGen();
-
 //  cellsAlive function to check alive cells
+nextGen();
 
 function cellsAlive() {
   let aliveNeighbours = 0;
@@ -65,9 +66,7 @@ function cellsAlive() {
   for (let n = 0; n < cells.length; n += 1) {
     for (let i = -1; i < 2; i += 1) {
       for (let j = -1; j < 2; j += 1) {
-        const neighbour = cells.find(
-          (cell) => cell.x === cell.x + i && cell.y === cell.y + j
-        );
+        const neighbour = cells.find((cell) => cell === cell.x + i);
         if (neighbour !== undefined) {
           if (neighbour.alive) {
             aliveNeighbours += 1;
