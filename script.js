@@ -3,9 +3,9 @@
 const canvas = document.querySelector("canvas");
 const context = canvas.getContext("2d");
 
-const resolution = 40;
-canvas.width = 400;
-canvas.height = 400;
+const resolution = 50;
+canvas.width = 500;
+canvas.height = 500;
 const cols = canvas.width / resolution;
 const rows = canvas.height / resolution;
 let cells = null;
@@ -43,7 +43,7 @@ function renderNextGen() {
         resolution,
         resolution
       );
-      context.fillStyle = cell.alive ? "black" : "white";
+      context.fillStyle = cell.alive ? "yellow" : "rgb(86, 2, 99)";
       context.stroke();
       context.fill();
     }
@@ -60,9 +60,9 @@ function selectCell() {
   });
 }
 function create2dArray() {
-  return new Array(10)
+  return new Array(cols)
     .fill(null)
-    .map(() => new Array(10).fill(0).map(() => selectCell()));
+    .map(() => new Array(rows).fill(0).map(() => selectCell()));
 }
 //  renderNextGen function to draw alive cells functions
 
@@ -125,7 +125,7 @@ function update() {
 
 function startGame() {
   if (!intervalID) {
-    intervalID = setInterval(update, 500);
+    intervalID = setInterval(update, 400);
   }
 }
 //  Stops the game
